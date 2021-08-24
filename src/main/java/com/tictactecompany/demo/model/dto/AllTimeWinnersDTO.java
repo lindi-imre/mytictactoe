@@ -1,5 +1,6 @@
 package com.tictactecompany.demo.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,7 +8,10 @@ import lombok.Data;
 @Builder
 public class AllTimeWinnersDTO {
 
+    @JsonProperty("xWinnersCounter")
     private int xWinnersCounter;
+
+    @JsonProperty("oWinnersCounter")
     private int oWinnersCounter;
 
 }

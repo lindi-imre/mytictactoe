@@ -72,13 +72,13 @@ public class GameTable {
                 fields[winningLines[i][0]].equals(fields[winningLines[i][1]]) &&
                 fields[winningLines[i][0]].equals(fields[winningLines[i][2]]))
             {
+                this.gameStatus = GameStatus.FINISH;
                 if(this.isSingletonGameTableResetted) {
                     if (fields[winningLines[i][0]].equals('X')) {
                         xPlayerWinCounter++;
                     } else {
                         oPlayerWinCounter++;
                     }
-                    this.gameStatus = GameStatus.FINISH;
                     this.isSingletonGameTableResetted = false;
                 }
                 return fields[winningLines[i][0]];
