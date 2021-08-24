@@ -63,6 +63,7 @@ public class GameTable {
         if(!Arrays.stream(fields).anyMatch(field -> field == null)) {
             gameStatus = GameStatus.DUE;
         }
+        log.info("The following movement happened. Player: {}, field: {}", move.getPlayerSign(), move.getPlace());
         calculateWinner();
         return fields;
     }
