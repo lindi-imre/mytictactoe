@@ -1,5 +1,6 @@
 package com.tictactecompany.demo.model;
 
+import com.tictactecompany.demo.model.exception.FieldIsNotEmptyException;
 import lombok.Data;
 
 @Data
@@ -29,7 +30,10 @@ public class GameTable {
         return gameTable;
     }
 
-    public Character[] doMove(Move move) {
+    public Character[] doMove(Move move) throws FieldIsNotEmptyException {
+        if(fields[move.getPlace()] != null) {
+            throw new FieldIsNotEmptyException("Field is not empty, choose a different one!");
+        }
         fields[move.getPlace()] = move.getPlayerSign();
         return fields;
     }
