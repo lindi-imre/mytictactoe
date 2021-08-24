@@ -1,5 +1,6 @@
 package com.tictactecompany.demo.controller;
 
+import com.tictactecompany.demo.model.RestResponse;
 import com.tictactecompany.demo.model.dto.AllTimeWinnersDTO;
 import com.tictactecompany.demo.model.dto.CommandDTO;
 import com.tictactecompany.demo.model.GameTable;
@@ -46,8 +47,8 @@ public class GameController {
 
     @ExceptionHandler(FieldIsNotEmptyException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleInvalidMoveException(FieldIsNotEmptyException e) {
-        return e.getMessage();
+    public RestResponse handleInvalidMoveException(FieldIsNotEmptyException e) {
+        return RestResponse.buildFailure(e.getMessage());
     }
 
     @ExceptionHandler(UnknownCommandException.class)

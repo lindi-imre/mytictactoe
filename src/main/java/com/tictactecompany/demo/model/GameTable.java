@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tictactecompany.demo.model.dto.AllTimeWinnersDTO;
 import com.tictactecompany.demo.model.exception.FieldIsNotEmptyException;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
 public class GameTable {
 
@@ -48,6 +50,7 @@ public class GameTable {
 
     public Character[] doMove(Move move) throws FieldIsNotEmptyException {
         if(fields[move.getPlace()] != null) {
+            log.error("The following player try to overwrite a field. Player: {}, Field: {}", move.getPlayerSign(), move.getPlace());
             throw new FieldIsNotEmptyException("Field is not empty, choose a different one!");
         }
         fields[move.getPlace()] = move.getPlayerSign();
