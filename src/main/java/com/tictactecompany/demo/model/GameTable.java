@@ -30,11 +30,32 @@ public class GameTable {
         return gameTable;
     }
 
+    public static GameTable resetSingletonGameTable() {
+        getSingletonGameTable().resetGameTable();
+        return getSingletonGameTable();
+    }
+
+    public void resetGameTable() {
+        fields = new Character[9];
+    }
+
     public Character[] doMove(Move move) throws FieldIsNotEmptyException {
         if(fields[move.getPlace()] != null) {
             throw new FieldIsNotEmptyException("Field is not empty, choose a different one!");
         }
         fields[move.getPlace()] = move.getPlayerSign();
         return fields;
+    }
+
+    public Character calculateWinner() {
+        for (int i = 0; i < fields.length; i++) {
+            if(fields[winningLines[i][0]] != null &&
+                fields[winningLines[i][0]].equals(fields[winningLines[i][1]]) &&
+                fields[winningLines[i][0]].equals(fields[winningLines[i][2]]))
+            {
+                return fields[winningLines[i][0]];
+            }
+        }
+        return null;
     }
 }
