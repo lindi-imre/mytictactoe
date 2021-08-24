@@ -1,6 +1,7 @@
 package com.tictactecompany.demo.controller;
 
-import com.tictactecompany.demo.model.CommandDTO;
+import com.tictactecompany.demo.model.dto.AllTimeWinnersDTO;
+import com.tictactecompany.demo.model.dto.CommandDTO;
 import com.tictactecompany.demo.model.GameTable;
 import com.tictactecompany.demo.model.Move;
 import com.tictactecompany.demo.model.exception.FieldIsNotEmptyException;
@@ -36,6 +37,11 @@ public class GameController {
     @GetMapping("/winner")
     public Character getWinner() {
         return GameTable.getSingletonGameTable().calculateWinner();
+    }
+
+    @GetMapping("/all-time-winners")
+    public AllTimeWinnersDTO getAllTimeWinners() {
+        return GameTable.getAllTimeWinners();
     }
 
     @ExceptionHandler(FieldIsNotEmptyException.class)

@@ -1,5 +1,7 @@
 package com.tictactecompany.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tictactecompany.demo.model.dto.AllTimeWinnersDTO;
 import com.tictactecompany.demo.model.exception.FieldIsNotEmptyException;
 import lombok.Data;
 
@@ -8,6 +10,11 @@ public class GameTable {
 
     private static GameTable gameTable;
     private Character[] fields = new Character[9];
+    private static int xPlayerWinCounter;
+    private static int oPlayerWinCounter;
+
+    @JsonIgnore
+    private boolean isSingletonGameTableResetted = true;
 
     // I create this static field to be able to easily check the winner
     private static int[][] winningLines = {
@@ -53,9 +60,24 @@ public class GameTable {
                 fields[winningLines[i][0]].equals(fields[winningLines[i][1]]) &&
                 fields[winningLines[i][0]].equals(fields[winningLines[i][2]]))
             {
+                if(this.isSingletonGameTableResetted) {
+                    if (fields[winningLines[i][0]].equals('X')) {
+                        xPlayerWinCounter++;
+                    } else {
+                        oPlayerWinCounter++;
+                    }
+                    this.isSingletonGameTableResetted = false;
+                }
                 return fields[winningLines[i][0]];
             }
         }
         return null;
+    }
+
+    public static AllTimeWinnersDTO getAllTimeWinners() {
+        return AllTimeWinnersDTO.builder()
+                .oWinnersCounter(oPlayerWinCounter)
+                .xWinnersCounter(xPlayerWinCounter)
+                .build();
     }
 }

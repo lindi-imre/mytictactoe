@@ -1,4 +1,4 @@
-package com.tictactecompany.demo.model;
+package com.tictactecompany.demo.model.dto;
 
 import lombok.Data;
 
