@@ -2,9 +2,12 @@ package com.tictactecompany.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tictactecompany.demo.model.dto.AllTimeWinnersDTO;
+import com.tictactecompany.demo.model.enums.GameStatus;
 import com.tictactecompany.demo.model.exception.FieldIsNotEmptyException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Arrays;
 
 @Slf4j
 @Data
@@ -12,6 +15,7 @@ public class GameTable {
 
     private static GameTable gameTable;
     private Character[] fields = new Character[9];
+    private GameStatus gameStatus = GameStatus.PLAYING;
     private static int xPlayerWinCounter;
     private static int oPlayerWinCounter;
 
@@ -46,6 +50,7 @@ public class GameTable {
 
     public void resetGameTable() {
         fields = new Character[9];
+        gameStatus = GameStatus.PLAYING;
     }
 
     public Character[] doMove(Move move) throws FieldIsNotEmptyException {
@@ -54,11 +59,15 @@ public class GameTable {
             throw new FieldIsNotEmptyException("Field is not empty, choose a different one!");
         }
         fields[move.getPlace()] = move.getPlayerSign();
+        if(!Arrays.stream(fields).anyMatch(field -> field == null)) {
+            gameStatus = GameStatus.DUE;
+        }
+        calculateWinner();
         return fields;
     }
 
     public Character calculateWinner() {
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < winningLines.length; i++) {
             if(fields[winningLines[i][0]] != null &&
                 fields[winningLines[i][0]].equals(fields[winningLines[i][1]]) &&
                 fields[winningLines[i][0]].equals(fields[winningLines[i][2]]))
@@ -69,6 +78,7 @@ public class GameTable {
                     } else {
                         oPlayerWinCounter++;
                     }
+                    this.gameStatus = GameStatus.FINISH;
                     this.isSingletonGameTableResetted = false;
                 }
                 return fields[winningLines[i][0]];
