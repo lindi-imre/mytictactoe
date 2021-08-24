@@ -49,6 +49,7 @@ public class GameTable {
     }
 
     public void resetGameTable() {
+        isSingletonGameTableResetted = true;
         fields = new Character[9];
         gameStatus = GameStatus.PLAYING;
     }
