@@ -7,6 +7,8 @@ import com.tictactecompany.demo.model.GameTable;
 import com.tictactecompany.demo.model.Move;
 import com.tictactecompany.demo.model.exception.FieldIsNotEmptyException;
 import com.tictactecompany.demo.model.exception.UnknownCommandException;
+import com.tictactecompany.demo.service.GameService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/game")
+@RequiredArgsConstructor
 public class GameController {
+
+    private final GameService gameService;
 
     @GetMapping("/get-table")
     public GameTable getGameTable() {
@@ -23,7 +28,7 @@ public class GameController {
 
     @PostMapping("/move")
     public GameTable move(@RequestBody Move move) throws FieldIsNotEmptyException {
-        GameTable.getSingletonGameTable().doMove(move);
+        gameService.makeMove(move);
         return GameTable.getSingletonGameTable();
     }
 
@@ -42,7 +47,7 @@ public class GameController {
 
     @GetMapping("/all-time-winners")
     public AllTimeWinnersDTO getAllTimeWinners() {
-        return GameTable.getAllTimeWinners();
+        return gameService.getAllTimeWinners();
     }
 
     @ExceptionHandler(FieldIsNotEmptyException.class)
