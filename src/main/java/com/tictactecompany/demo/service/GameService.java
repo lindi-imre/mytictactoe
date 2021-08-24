@@ -39,11 +39,9 @@ public class GameService {
     }
 
     public AllTimeWinnersDTO getAllTimeWinners() {
-        Long xCounter = winningCounterByPlayer("X");
-
-        Long oCounter = winningCounterByPlayer("O");
-
-        Long drawsCounter = winningCounterByPlayer("D");
+        Long xCounter = winningOrDrawCounterByPlayer("X");
+        Long oCounter = winningOrDrawCounterByPlayer("O");
+        Long drawsCounter = winningOrDrawCounterByPlayer("D");
 
         // Count query returns with long type, primitive conversion needed
         return AllTimeWinnersDTO.builder()
@@ -53,7 +51,7 @@ public class GameService {
                 .build();
     }
 
-    private Long winningCounterByPlayer(String player) {
+    private Long winningOrDrawCounterByPlayer(String player) {
         return entityManager.createQuery("select count(w) from Winning w " +
                 "where w.player = ?1", Long.class)
                 .setParameter(1, player)

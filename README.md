@@ -5,7 +5,7 @@
 ### Here is the magic command, (tested on windows): 
 docker run --name local-postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres
 
-This will start to run a postgreSQL database in docker user is postgres, but password is not needed.
+This will start to run a postgreSQL database in docker. User is postgres, but password is not needed.
 
 ###Run the backend app:
 mvnw spring-boot:run
