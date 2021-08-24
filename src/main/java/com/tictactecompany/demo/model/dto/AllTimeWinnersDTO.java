@@ -14,4 +14,7 @@ public class AllTimeWinnersDTO {
     @JsonProperty("oWinnersCounter")
     private int oWinnersCounter;
 
+    @JsonProperty("drawsCounter")
+    private int drawsCounter;
+
 }

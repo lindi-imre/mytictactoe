@@ -43,9 +43,13 @@ public class GameService {
 
         Long oCounter = winningCounterByPlayer("O");
 
+        Long drawsCounter = winningCounterByPlayer("D");
+
+        // Count query returns with long type, primitive conversion needed
         return AllTimeWinnersDTO.builder()
                 .xWinnersCounter(xCounter.intValue())
                 .oWinnersCounter(oCounter.intValue())
+                .drawsCounter(drawsCounter.intValue())
                 .build();
     }
 

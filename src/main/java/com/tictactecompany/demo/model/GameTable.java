@@ -86,6 +86,9 @@ public class GameTable {
                 return fields[winningLines[i][0]];
             }
         }
+        if(!Arrays.stream(fields).anyMatch(field -> field == null)) {
+            return 'D';
+        }
         return null;
     }
 
